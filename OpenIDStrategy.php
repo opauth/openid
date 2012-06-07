@@ -78,7 +78,17 @@ class OpenIDStrategy extends OpauthStrategy{
 			}
 			else{
 				$this->openid->identity = $_POST['openid_url'];
-				$this->redirect($this->openid->authUrl());
+				try{
+					$this->redirect($this->openid->authUrl());
+				} catch (Exception $e){
+					$error = array(
+						'provider' => 'OpenID',
+						'code' => 'bad_identifier',
+						'message' => $e->getMessage()
+					);
+
+					$this->errorCallback($error);
+				}
 			}
 		}
 		elseif ($this->openid->mode == 'cancel'){
