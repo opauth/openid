@@ -54,7 +54,8 @@ class OpenIDStrategy extends OpauthStrategy{
 			'contact/web',
 			'contact/web/default',
 			'media/image'
-		)
+		),
+		'identifier_form' => 'identifier_request.html'
 	);
 	
 	public function __construct($strategy, $env){
@@ -71,12 +72,14 @@ class OpenIDStrategy extends OpauthStrategy{
 	 * Ask for OpenID identifer
 	 */
 	public function request(){
-		$identifier = 'pingsg.wordpress.com';
-		//$identifier = 'yahoo.com';
-		
 		if (!$this->openid->mode){
-			$this->openid->identity = $identifier;
-			$this->redirect($this->openid->authUrl());
+			if (empty($_POST['openid_url'])){
+				$this->render($this->strategy['identifier_form']);
+			}
+			else{
+				$this->openid->identity = $_POST['openid_url'];
+				$this->redirect($this->openid->authUrl());
+			}
 		}
 		elseif ($this->openid->mode == 'cancel'){
 			echo 'User has canceled authentication!';
@@ -85,5 +88,13 @@ class OpenIDStrategy extends OpauthStrategy{
 			echo 'User ' . ($this->openid->validate() ? $this->openid->identity . ' has ' : 'has not ') . 'logged in.';
 			print_r($this->openid->getAttributes());
 		}
+	}
+	
+	/**
+	 * Render a view
+	 */
+	protected function render($view, $exit = true){
+		require($view);
+		if ($exit) exit();
 	}
 }
