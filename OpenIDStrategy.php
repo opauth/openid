@@ -92,11 +92,47 @@ class OpenIDStrategy extends OpauthStrategy{
 			}
 		}
 		elseif ($this->openid->mode == 'cancel'){
-			echo 'User has canceled authentication!';
+			$error = array(
+				'provider' => 'OpenID',
+				'code' => 'cancel_authentication',
+				'message' => 'User has canceled authentication'
+			);
+
+			$this->errorCallback($error);
 	    }
-		else {
-			echo 'User ' . ($this->openid->validate() ? $this->openid->identity . ' has ' : 'has not ') . 'logged in.';
-			print_r($this->openid->getAttributes());
+		elseif (!$this->openid->validate()){
+			$error = array(
+				'provider' => 'OpenID',
+				'code' => 'not_logged_in',
+				'message' => 'User has not logged in'
+			);
+
+			$this->errorCallback($error);
+		}
+		else{
+			$attributes = $this->openid->getAttributes();
+			$this->auth = array(
+				'provider' => 'OpenID',
+				'uid' => $this->openid->identity,
+				'info' => array(),
+				'credentials' => array(),
+				'raw' => $this->openid->getAttributes()
+			);
+			
+			if (!empty($attributes['contact/email'])) $this->auth['info']['email'] = $attributes['contact/email'];
+			if (!empty($attributes['contact/internet/email'])) $this->auth['info']['email'] = $attributes['contact/internet/email'];
+			if (!empty($attributes['email'])) $this->auth['info']['email'] = $attributes['email'];
+			if (!empty($attributes['namePerson'])) $this->auth['info']['name'] = $attributes['namePerson'];
+			if (!empty($attributes['fullname'])) $this->auth['info']['name'] = $attributes['fullname'];
+			if (!empty($attributes['namePerson/first'])) $this->auth['info']['first_name'] = $attributes['namePerson/first'];
+			if (!empty($attributes['namePerson/last'])) $this->auth['info']['last_name'] = $attributes['namePerson/last'];
+			if (!empty($attributes['namePerson/friendly'])) $this->auth['info']['nickname'] = $attributes['namePerson/friendly'];
+			if (!empty($attributes['contact/phone'])) $this->auth['info']['phone'] = $attributes['contact/phone'];
+			if (!empty($attributes['contact/web'])) $this->auth['info']['urls']['website'] = $attributes['contact/web'];
+			if (!empty($attributes['contact/web/default'])) $this->auth['info']['urls']['website'] = $attributes['contact/web/default'];
+			if (!empty($attributes['media/image'])) $this->auth['info']['image'] = $attributes['media/image'];
+			
+			$this->callback();
 		}
 	}
 	
