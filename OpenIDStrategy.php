@@ -40,6 +40,10 @@ class OpenIDStrategy extends OpauthStrategy{
 		// you wish to overwrite these
 		'required' => array(
 			'contact/internet/email',
+			'contact/email',
+			'email',
+			'namePerson',
+			'fullname',
 			'namePerson/first',
 			'namePerson/last',
 			'namePerson/friendly',
@@ -48,6 +52,7 @@ class OpenIDStrategy extends OpauthStrategy{
 		'optional' => array(
 			'contact/phone',
 			'contact/web',
+			'contact/web/default',
 			'media/image'
 		)
 	);
@@ -66,7 +71,8 @@ class OpenIDStrategy extends OpauthStrategy{
 	 * Ask for OpenID identifer
 	 */
 	public function request(){
-		$identifier = 'yahoo.com';
+		$identifier = 'pingsg.wordpress.com';
+		//$identifier = 'yahoo.com';
 		
 		if (!$this->openid->mode){
 			$this->openid->identity = $identifier;
