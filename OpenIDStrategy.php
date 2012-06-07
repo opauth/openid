@@ -2,6 +2,10 @@
 /**
  * OpenID strategy for Opauth
  * 
+ * Implemented with Mewp's LightOpenID Library,
+ *   included at Vendor/lightopenid
+ *   (https://gitorious.org/lightopenid/lightopenid)
+ * 
  * More information on Opauth: http://opauth.org
  * 
  * @copyright    Copyright © 2012 U-Zyn Chua (http://uzyn.com)
@@ -54,6 +58,8 @@ class OpenIDStrategy extends OpauthStrategy{
 		$parsed = parse_url($this->env['host']);
 		require dirname(__FILE__).'/Vendor/lightopenid/openid.php';
 		$this->openid = new LightOpenID($parsed['host']);
+		$this->openid->required = $this->strategy['required'];
+		$this->openid->optional = $this->strategy['optional'];
 	}
 	
 	/**
@@ -61,6 +67,17 @@ class OpenIDStrategy extends OpauthStrategy{
 	 */
 	public function request(){
 		$identifier = 'yahoo.com';
-		echo $identifier;
+		
+		if (!$this->openid->mode){
+			$this->openid->identity = $identifier;
+			$this->redirect($this->openid->authUrl());
+		}
+		elseif ($this->openid->mode == 'cancel'){
+			echo 'User has canceled authentication!';
+	    }
+		else {
+			echo 'User ' . ($this->openid->validate() ? $this->openid->identity . ' has ' : 'has not ') . 'logged in.';
+			print_r($this->openid->getAttributes());
+		}
 	}
 }
