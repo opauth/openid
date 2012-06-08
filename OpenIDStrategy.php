@@ -39,20 +39,15 @@ class OpenIDStrategy extends OpauthStrategy{
 		// Refer to http://openid.net/specs/openid-attribute-properties-list-1_0-01.html if
 		// you wish to overwrite these
 		'required' => array(
-			'contact/internet/email',
 			'contact/email',
-			'email',
 			'namePerson',
-			'fullname',
 			'namePerson/first',
 			'namePerson/last',
-			'namePerson/friendly',
-			'person/guid'
+			'namePerson/friendly'
 		),
 		'optional' => array(
 			'contact/phone',
 			'contact/web',
-			'contact/web/default',
 			'media/image'
 		),
 		'identifier_form' => 'identifier_request.html'
@@ -120,8 +115,6 @@ class OpenIDStrategy extends OpauthStrategy{
 			);
 			
 			if (!empty($attributes['contact/email'])) $this->auth['info']['email'] = $attributes['contact/email'];
-			if (!empty($attributes['contact/internet/email'])) $this->auth['info']['email'] = $attributes['contact/internet/email'];
-			if (!empty($attributes['email'])) $this->auth['info']['email'] = $attributes['email'];
 			if (!empty($attributes['namePerson'])) $this->auth['info']['name'] = $attributes['namePerson'];
 			if (!empty($attributes['fullname'])) $this->auth['info']['name'] = $attributes['fullname'];
 			if (!empty($attributes['namePerson/first'])) $this->auth['info']['first_name'] = $attributes['namePerson/first'];
@@ -129,7 +122,6 @@ class OpenIDStrategy extends OpauthStrategy{
 			if (!empty($attributes['namePerson/friendly'])) $this->auth['info']['nickname'] = $attributes['namePerson/friendly'];
 			if (!empty($attributes['contact/phone'])) $this->auth['info']['phone'] = $attributes['contact/phone'];
 			if (!empty($attributes['contact/web'])) $this->auth['info']['urls']['website'] = $attributes['contact/web'];
-			if (!empty($attributes['contact/web/default'])) $this->auth['info']['urls']['website'] = $attributes['contact/web/default'];
 			if (!empty($attributes['media/image'])) $this->auth['info']['image'] = $attributes['media/image'];
 			
 			$this->callback();
