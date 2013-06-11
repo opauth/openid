@@ -12,7 +12,7 @@ Getting started
    git clone git://github.com/uzyn/opauth-openid.git OpenID
    ```
    
-2. Configure Opauth-Google strategy. _(see next section)_
+2. Configure Opauth-OpenID strategy. _(see next section)_
 
 3. Direct user to `http://path_to_opauth/openid` to authenticate
 
