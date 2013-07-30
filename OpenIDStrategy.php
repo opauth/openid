@@ -50,7 +50,8 @@ class OpenIDStrategy extends OpauthStrategy{
 			'contact/web',
 			'media/image'
 		),
-		'identifier_form' => 'identifier_request.html'
+		'identifier_form' => 'identifier_request.html',
+		'identity' => NULL
 	);
 	
 	public function __construct($strategy, $env){
@@ -61,6 +62,8 @@ class OpenIDStrategy extends OpauthStrategy{
 		$this->openid = new LightOpenID($parsed['host']);
 		$this->openid->required = $this->strategy['required'];
 		$this->openid->optional = $this->strategy['optional'];
+		
+		$this->openid->identity = ! empty ($this->strategy['identity']) ? $this->strategy['identity'] : NULL;
 	}
 	
 	/**
@@ -68,11 +71,17 @@ class OpenIDStrategy extends OpauthStrategy{
 	 */
 	public function request(){
 		if (!$this->openid->mode){
-			if (empty($_POST['openid_url'])){
-				$this->render($this->strategy['identifier_form']);
+			if (! $this->openid->identity)
+			{
+				if (empty($_POST['openid_url'])){
+					$this->render($this->strategy['identifier_form']);
+				} else{
+					$this->openid->identity = $_POST['openid_url'];
+				}
 			}
-			else{
-				$this->openid->identity = $_POST['openid_url'];
+			
+			if ( $this->openid->identity )
+			{
 				try{
 					$this->redirect($this->openid->authUrl());
 				} catch (Exception $e){
