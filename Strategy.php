@@ -73,7 +73,7 @@ class Strategy extends AbstractStrategy {
 		if (empty($this->strategy['openid_url']) && empty($_POST['openid_url'])) {
 			$this->render($this->strategy['identifier_form']);
 		}
-		if ($_POST['openid_url']) {
+		if (isset($_POST['openid_url'])) {
 			$this->strategy['openid_url'] = $_POST['openid_url'];
 		}
 		$this->openid->identity = $this->strategy['openid_url'];
