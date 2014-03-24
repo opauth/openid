@@ -134,7 +134,6 @@ class OpenID extends AbstractStrategy {
 	}
 
 	protected function loadOpenid() {
-		require dirname(__FILE__) . '/Vendor/lightopenid/openid.php';
 		$url = $this->callbackUrl();
 		$this->openid = new \LightOpenID($url);
 		$this->openid->returnUrl = $url;
