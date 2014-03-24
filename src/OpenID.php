@@ -13,15 +13,15 @@
  * @license      MIT License
  */
 
-namespace Opauth\Strategy\OpenID;
+namespace Opauth\OpenID\Strategy;
 
-use Opauth\AbstractStrategy;
+use Opauth\Opauth\AbstractStrategy;
 
 /**
  * OpenID strategy for Opauth
  *
  */
-class Strategy extends AbstractStrategy {
+class OpenID extends AbstractStrategy {
 
 	/**
 	 * Compulsory config keys, listed as unassociative arrays

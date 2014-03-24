@@ -20,7 +20,6 @@
         "opauth/opauth": "dev-wip/1.0"
     },
     "autoload": {
-        "psr-0": { "Opauth\\Strategy\\OpenID": "" }
-    },
-    "target-dir": "Opauth/Strategy/OpenID"
+        "psr-4": { "Opauth\\OpenID\\Strategy\\": "src" }
+    }
 }

@@ -8,10 +8,10 @@ Getting started
 ----------------
 1. Install Opauth-OpenID:
    ```bash
-   cd path_to_opauth/Strategy
-   git clone git://github.com/uzyn/opauth-openid.git OpenID
+   cd path/to/app
+   composer require opauth/openid:dev-wip/1.0
    ```
-   
+
 2. Configure Opauth-OpenID strategy. _(see next section)_
 
 3. Direct user to `http://path_to_opauth/openid` to authenticate
@@ -37,12 +37,12 @@ Optional parameters:
 
 Credits
 -------
-Opauth-OpenID includes Mewp's [LightOpenID library](https://gitorious.org/lightopenid/lightopenid).  
+Opauth-OpenID includes Mewp's [LightOpenID library](https://gitorious.org/lightopenid/lightopenid).
 LightOpenID library is Copyright (c) 2010, Mewp and MIT licensed.
 
 License
 ---------
-Opauth-OpenID is MIT Licensed  
+Opauth-OpenID is MIT Licensed
 Copyright © 2012 U-Zyn Chua (http://uzyn.com)
 
 [1]: https://github.com/uzyn/opauth
