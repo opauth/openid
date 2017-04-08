@@ -9,8 +9,8 @@ Getting started
 1. Install Opauth-OpenID:
    ```bash
    cd path_to_opauth/Strategy
-   git clone git://github.com/uzyn/opauth-openid.git OpenID
-   ```
+   git clone git://github.com/opauth/openid.git OpenID
+   ``
    
 2. Configure Opauth-OpenID strategy. _(see next section)_
 
@@ -45,4 +45,4 @@ License
 Opauth-OpenID is MIT Licensed  
 Copyright © 2012 U-Zyn Chua (http://uzyn.com)
 
-[1]: https://github.com/uzyn/opauth
+[1]: https://github.com/opauth/opauth
