@@ -10,7 +10,11 @@ Getting started
    ```bash
    cd path_to_opauth/Strategy
    git clone git://github.com/opauth/openid.git OpenID
-   ``
+   ```
+   or
+   ```
+   composer require opauth/openid
+   ```
    
 2. Configure Opauth-OpenID strategy. _(see next section)_
 
