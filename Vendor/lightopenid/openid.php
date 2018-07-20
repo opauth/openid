@@ -794,8 +794,18 @@ class LightOpenID
     {
         $attributes = array();
         $sreg_to_ax = array_flip(self::$ax_to_sreg);
+
+        $ns = 'sreg';
+        foreach ($this->data as $key => $val) {
+            if (substr($key, 0, strlen('openid_ns_')) == 'openid_ns_'
+                && $val == 'http://openid.net/extensions/sreg/1.1') {
+                $ns = substr($key, strlen('openid_ns_'));
+                break;
+            }
+        }
+
         foreach (explode(',', $this->data['openid_signed']) as $key) {
-            $keyMatch = 'sreg.';
+            $keyMatch = $ns . '.';
             if (substr($key, 0, strlen($keyMatch)) != $keyMatch) {
                 continue;
             }
@@ -804,7 +814,7 @@ class LightOpenID
                 # The field name isn't part of the SREG spec, so we ignore it.
                 continue;
             }
-            $attributes[$sreg_to_ax[$key]] = $this->data['openid_sreg_' . $key];
+            $attributes[$sreg_to_ax[$key]] = $this->data['openid_' . $ns . '_' . $key];
         }
         return $attributes;
     }
